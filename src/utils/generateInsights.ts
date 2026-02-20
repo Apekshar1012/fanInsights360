@@ -7,6 +7,7 @@ const keywords = {
   '1 wicket': 45,
   '10 runs': 80,
   '5 balls': 75,
+  '1 ball': 90,
   'India': 5,
   'CSK': 8,
   'Mumbai': -3
