@@ -16,37 +16,46 @@ const InputSection = ({ onGenerate, disabled }: Props) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="bg-white/70 backdrop-blur-xl text-black rounded-3xl p-8 shadow-2xl border border-white/50">
-      <div className="relative">
-        <Sparkles className="absolute left-4 top-1/2 -translate-y-1/2 text-indigo-500 w-6 h-6" />
+  <form onSubmit={handleSubmit} className="relative group">
+    <div className="bg-gradient-to-r from-gray-900/95 to-black/95 backdrop-blur-2xl border border-emerald-500/30 rounded-3xl p-1 shadow-2xl shadow-emerald-500/25 hover:shadow-emerald-400/40 transition-all duration-500">
+      <div className="bg-gradient-to-b from-emerald-900/80 to-indigo-900/80 border border-emerald-400/20 rounded-3xl p-8 relative overflow-hidden">
+        {/* Stadium Lights Effect */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-10%,rgba(16,185,129,0.3),transparent)] opacity-50" />
+        
+        {/* Sport Emojis */}
+        <div className="absolute top-4 left-4 flex gap-1 text-2xl">
+          <span className="animate-pulse">🏏</span>
+          <span className="animate-bounce delay-300">⚽</span>
+        </div>
+        
         <textarea
           value={scenario}
           onChange={(e) => setScenario(e.target.value)}
-          placeholder="e.g., 'India needs 20 runs in 6 balls, 2 wickets left' or 'CSK 180/3 in 15 overs chasing 200'"
+          placeholder="India needs 20 runs in 6 balls, 2 wickets left... OR Man City attacking in 90th minute..."
           rows={4}
           disabled={disabled}
-          className="w-full pl-12 pr-6 py-4 bg-white/50 border-2 border-indigo-200/50 rounded-2xl focus:border-indigo-400 focus:outline-none focus:ring-4 focus:ring-indigo-100/50 resize-none text-lg placeholder-gray-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+          className="w-full h-[160px] bg-transparent/50 backdrop-blur-sm text-white placeholder-white/70 text-lg font-semibold p-6 rounded-2xl border-2 border-white/20 focus:border-emerald-400 focus:outline-none resize-none"
         />
+        
         <button
           type="submit"
           disabled={disabled || !scenario.trim()}
-          className="absolute right-4 bottom-4 group disabled:opacity-50 disabled:cursor-not-allowed"
+          className="group/btn absolute bottom-6 right-6 bg-gradient-to-r from-emerald-500 to-amber-500 hover:from-emerald-400 hover:to-amber-400 text-black font-bold px-8 py-4 rounded-2xl shadow-2xl hover:shadow-emerald-500/50 transform hover:scale-105 hover:-rotate-3 transition-all duration-300 disabled:opacity-40"
         >
-          <Send 
-            size={24} 
-            className="transition-all group-hover:scale-110 group-hover:rotate-12 text-indigo-600 group-hover:text-indigo-700" 
-          />
+          {disabled ? (
+            <>
+              <div className="w-6 h-6 border-2 border-black/30 border-t-black rounded-full animate-spin inline-block mr-2" />
+              LIVE ANALYSIS
+            </>
+          ) : (
+            'GENERATE INSIGHT ⚡'
+          )}
         </button>
       </div>
-      
-      {disabled && (
-        <div className="mt-4 flex items-center gap-2 text-sm text-indigo-600 font-medium">
-          <div className="w-2 h-2 bg-indigo-500 rounded-full animate-ping" />
-          Generating insights...
-        </div>
-      )}
-    </form>
-  );
+    </div>
+  </form>
+);
+
 };
 
 export default InputSection;
