@@ -1,35 +1,49 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from 'react';
+import InputSection from './components/InputSection';
+import OutputSection from './components/OutputSection';
+import type { Scenario } from './types';
+import { generateInsight } from './utils/generateInsights';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [insight, setInsight] = useState<Scenario | null>(null);
+  const [isGenerating, setIsGenerating] = useState(false);
+
+  const handleGenerate = async (scenarioInput: string) => {
+    setIsGenerating(true);
+    await new Promise(resolve => setTimeout(resolve, 1500)); // Simulate AI
+    const newInsight = generateInsight(scenarioInput);
+    setInsight(newInsight);
+    setIsGenerating(false);
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className="min-h-screen w-full bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 py-12 px-4 align-center">
+      <div className="w-full max-w-4xl mx-auto">
+        <header className="text-center mb-12 w-full">
+          <h1 className="text-5xl font-black bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent mb-4 w-full">
+            Sports Fan 360 : Fan Insight Generator
+          </h1>
+          <p className="text-xl text-gray-600 max-w-md mx-auto">
+            Enter a match scenario and get instant AI-powered analysis & win probability
+          </p>
+        </header>
+
+        <div className="space-y-8 w-full">
+          <InputSection 
+            onGenerate={handleGenerate}
+            disabled={isGenerating}
+          />
+          
+          {insight && (
+            <OutputSection 
+              scenario={insight}
+              onReset={() => setInsight(null)}
+            />
+          )}
+        </div>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    </div>
+  );
 }
 
-export default App
+export default App;
