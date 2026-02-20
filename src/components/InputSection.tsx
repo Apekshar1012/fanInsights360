@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { Sparkles, Send } from 'lucide-react';
 
 interface Props {
   onGenerate: (scenario: string) => Promise<void>;
